@@ -247,6 +247,46 @@
                                     "key_code": "right_command"
                                 }
                             ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "page_up"
+                            },
+                            "to": [
+                                {
+                                    "consumer_key_code": "rewind"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "page_down"
+                            },
+                            "to": [
+                                {
+                                    "consumer_key_code": "fast_forward"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "delete_forward"
+                            },
+                            "to": [
+                                {
+                                    "consumer_key_code": "play_or_pause"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "left_control"
+                            },
+                            "to": [
+                                {
+                                    "apple_vendor_top_case_key_code": "keyboard_fn"
+                                }
+                            ]
                         }
                     ],
                     "treat_as_built_in_keyboard": false
