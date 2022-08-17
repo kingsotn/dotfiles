@@ -1,0 +1,1 @@
+{"title":"swap tabs cmd+esc","rules":[{"description":"swap tabs like cmd ` on mac with esc","manipulators":[{"type":"basic","from":{"modifiers":{"mandatory":["left_gui"],"optional":["left_shift"]},"key_code":"escape"},"to":[{"repeat":false,"key_code":"grave_accent_and_tilde","modifiers":["left_gui"]}]}]}]}
