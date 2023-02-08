@@ -1,6 +1,5 @@
 # personal-karabiner-60-
-kingston's karabiner bindings for 60% keyboard
+my personal intel mac configs and shell files
 
-better 60% keyboards for mac users, yabai, skhd:
+includes yabairc, skhd, karabiner, and sketchybar
 
-includes yabairc and skhdrc files and karabiner.config
