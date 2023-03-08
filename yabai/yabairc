@@ -88,4 +88,4 @@ yabai -m rule --add app='^Discord|WeChat$' space=^5
 yabai -m rule --add app='Spotify$' space=^6
 yabai -m rule --add app='zoom.us$' space=^7
 
-# send apps to a specific space%
+# send apps to a specific space

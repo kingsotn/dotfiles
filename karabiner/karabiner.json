@@ -288,7 +288,7 @@
                         ]
                     },
                     {
-                        "description": "Hyper + shift + 8,9 = select prev or forward word",
+                        "description": "Hyper + 9,0 = option text moving",
                         "manipulators": [
                             {
                                 "from": {
@@ -298,8 +298,7 @@
                                             "right_command",
                                             "right_control",
                                             "right_shift",
-                                            "right_option",
-                                            "left_shift"
+                                            "right_option"
                                         ],
                                         "optional": [
                                             "any"
@@ -310,7 +309,6 @@
                                     {
                                         "key_code": "left_arrow",
                                         "modifiers": [
-                                            "left_shift",
                                             "right_option"
                                         ]
                                     }
@@ -325,8 +323,7 @@
                                             "right_command",
                                             "right_control",
                                             "right_shift",
-                                            "right_option",
-                                            "left_shift"
+                                            "right_option"
                                         ],
                                         "optional": [
                                             "any"
@@ -337,7 +334,6 @@
                                     {
                                         "key_code": "right_arrow",
                                         "modifiers": [
-                                            "left_shift",
                                             "right_option"
                                         ]
                                     }
@@ -440,7 +436,7 @@
                         ]
                     },
                     {
-                        "description": "CapsLock to Hyper",
+                        "description": "CapsLock to ls",
                         "manipulators": [
                             {
                                 "description": "capslock = esc(click) | hyper(hold)",
@@ -459,37 +455,6 @@
                                             "right_command",
                                             "right_control",
                                             "right_option"
-                                        ]
-                                    }
-                                ],
-                                "to_if_alone": [
-                                    {
-                                        "key_code": "escape"
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "description": "escape = capslock switch",
-                                "from": {
-                                    "key_code": "escape",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ],
-                                        "optional": [
-                                            "caps_lock"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "caps_lock",
-                                        "modifiers": [
-                                            "left_control"
                                         ]
                                     }
                                 ],
@@ -513,31 +478,6 @@
                                         "key_code": "spacebar",
                                         "modifiers": [
                                             "left_control"
-                                        ]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "description": "command + spacebar = emoji",
-                                "from": {
-                                    "key_code": "spacebar",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_command",
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "spacebar",
-                                        "modifiers": [
-                                            "left_control",
-                                            "left_command"
                                         ]
                                     }
                                 ],
@@ -952,7 +892,18 @@
                     },
                     "ignore": true,
                     "manipulate_caps_lock_led": true,
-                    "simple_modifications": [],
+                    "simple_modifications": [
+                        {
+                            "from": {
+                                "key_code": "left_option"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "left_command"
+                                }
+                            ]
+                        }
+                    ],
                     "treat_as_built_in_keyboard": false
                 },
                 {
@@ -964,9 +915,30 @@
                         "product_id": 16387,
                         "vendor_id": 12625
                     },
-                    "ignore": false,
+                    "ignore": true,
                     "manipulate_caps_lock_led": true,
-                    "simple_modifications": [],
+                    "simple_modifications": [
+                        {
+                            "from": {
+                                "key_code": "left_command"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "left_option"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "left_option"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "left_command"
+                                }
+                            ]
+                        }
+                    ],
                     "treat_as_built_in_keyboard": false
                 },
                 {
@@ -977,6 +949,20 @@
                         "is_pointing_device": false,
                         "product_id": 6944,
                         "vendor_id": 6940
+                    },
+                    "ignore": false,
+                    "manipulate_caps_lock_led": true,
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": [],
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": true,
+                        "product_id": 9248,
+                        "vendor_id": 9639
                     },
                     "ignore": false,
                     "manipulate_caps_lock_led": true,
