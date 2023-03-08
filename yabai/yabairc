@@ -40,10 +40,11 @@ yabai -m config mouse_action2                resize
 
 # general space settings
 yabai -m config layout                       bsp
-yabai -m config bottom_padding               10
-yabai -m config left_padding                 15
-yabai -m config right_padding                15
-yabai -m config window_gap                   15
+yabai -m config bottom_padding               25
+# yabai -m config left_padding                 15
+# yabai -m config right_padding                15
+# yabai -m config top_padding                  5
+yabai -m config window_gap                   8
 
 # float appsod
 yabai -m rule --add app='^System Information$' manage=off
@@ -77,7 +78,6 @@ setup_space 3 terminal
 setup_space 4 notion
 setup_space 5 socials
 setup_space 6 spotify
-setup_space 7 zoom
 
 # move apps to specific spaces
 yabai -m rule --add app='Brave Browser$' space=^1
