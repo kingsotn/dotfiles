@@ -1,90 +1,63 @@
 {
-    "global": {
-        "ask_for_confirmation_before_quitting": true,
-        "check_for_updates_on_startup": true,
-        "show_in_menu_bar": false,
-        "show_profile_name_in_menu_bar": false,
-        "unsafe_ui": false
-    },
     "profiles": [
         {
             "complex_modifications": {
-                "parameters": {
-                    "basic.simultaneous_threshold_milliseconds": 50,
-                    "basic.to_delayed_action_delay_milliseconds": 500,
-                    "basic.to_if_alone_timeout_milliseconds": 1000,
-                    "basic.to_if_held_down_threshold_milliseconds": 500,
-                    "mouse_motion_to_scroll.speed": 100
-                },
                 "rules": [
+                    {
+                        "description": "Spotify volume control with Alt + F11/F12",
+                        "manipulators": [
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "key_code": "f11",
+                                    "modifiers": {
+                                        "mandatory": ["option"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "osascript -e 'tell application \"Spotify\" to set sound volume to (sound volume - 5)'"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "key_code": "f12",
+                                    "modifiers": {
+                                        "mandatory": ["option"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "osascript -e 'tell application \"Spotify\" to set sound volume to (sound volume + 5)'"
+                                    }
+                                ]
+                            }
+                        ]
+                    },                    
                     {
                         "description": "open g chrome",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "g",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["right_command", "right_control", "right_shift", "right_option"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "open -a 'Google Chrome.app'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "open -a 'Google Chrome.app'" }],
                                 "type": "basic"
                             }
                         ]
                     },
                     {
-                        "description": "open o chatgpt",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "o",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "open -a 'ChatGPT.app'"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "open 6 docker",
+                        "description": "open 6 slack",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "6",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["right_command", "right_control", "right_shift", "right_option"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "open -a 'Messages.app'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "open -a 'Slack.app'" }],
                                 "type": "basic"
                             }
                         ]
@@ -95,20 +68,9 @@
                             {
                                 "from": {
                                     "key_code": "1",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["right_command", "right_control", "right_shift", "right_option"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "open -a 'Brave Browser.app'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "open -a 'Brave Browser.app'" }],
                                 "type": "basic"
                             }
                         ]
@@ -119,20 +81,9 @@
                             {
                                 "from": {
                                     "key_code": "2",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["right_command", "right_control", "right_shift", "right_option"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "open -a 'Visual Studio Code.app'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "open -a 'Cursor.app'" }],
                                 "type": "basic"
                             }
                         ]
@@ -143,68 +94,9 @@
                             {
                                 "from": {
                                     "key_code": "3",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["right_command", "right_control", "right_shift", "right_option"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "open -a 'iTerm.app'"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "open 4 obsidian",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "4",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "open -a 'Obsidian.app'"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "open 5 wechat",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "5",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "open -a 'WeChat.app'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "open -a 'iTerm.app'" }],
                                 "type": "basic"
                             }
                         ]
@@ -215,20 +107,9 @@
                             {
                                 "from": {
                                     "key_code": "7",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["right_command", "right_control", "right_shift", "right_option"] }
                                 },
-                                "to": [
-                                    {
-                                        "shell_command": "open -a 'Spotify.app'"
-                                    }
-                                ],
+                                "to": [{ "shell_command": "open -a 'Spotify.app'" }],
                                 "type": "basic"
                             }
                         ]
@@ -240,20 +121,14 @@
                                 "from": {
                                     "key_code": "escape",
                                     "modifiers": {
-                                        "mandatory": [
-                                            "left_gui"
-                                        ],
-                                        "optional": [
-                                            "left_shift"
-                                        ]
+                                        "mandatory": ["left_gui"],
+                                        "optional": ["left_shift"]
                                     }
                                 },
                                 "to": [
                                     {
                                         "key_code": "grave_accent_and_tilde",
-                                        "modifiers": [
-                                            "left_gui"
-                                        ],
+                                        "modifiers": ["left_gui"],
                                         "repeat": false
                                     }
                                 ],
@@ -267,18 +142,12 @@
                             {
                                 "from": {
                                     "key_code": "escape",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_shift"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["left_shift"] }
                                 },
                                 "to": [
                                     {
                                         "key_code": "grave_accent_and_tilde",
-                                        "modifiers": [
-                                            "left_shift"
-                                        ],
+                                        "modifiers": ["left_shift"],
                                         "repeat": false
                                     }
                                 ],
@@ -293,42 +162,35 @@
                                 "description": "command + z = F5 (vscode debug)",
                                 "from": {
                                     "key_code": "z",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_command",
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["left_command", "right_command", "right_control", "right_shift", "right_option"] }
                                 },
-                                "to": [
-                                    {
-                                        "key_code": "f5"
-                                    }
-                                ],
+                                "to": [{ "key_code": "f5" }],
                                 "type": "basic"
                             },
                             {
                                 "description": "z = ctrl-z",
                                 "from": {
                                     "key_code": "z",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["right_command", "right_control", "right_shift", "right_option"] }
                                 },
                                 "to": [
                                     {
                                         "key_code": "z",
-                                        "modifiers": [
-                                            "left_control"
-                                        ]
+                                        "modifiers": ["left_control"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "hyper+r = ctrl-r",
+                                "from": {
+                                    "key_code": "r",
+                                    "modifiers": { "mandatory": ["right_command", "right_control", "right_shift", "right_option"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "r",
+                                        "modifiers": ["left_control"]
                                     }
                                 ],
                                 "type": "basic"
@@ -337,22 +199,12 @@
                                 "description": "command + x = ctrl + F5 (vscode run)",
                                 "from": {
                                     "key_code": "x",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_command",
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["left_command", "right_command", "right_control", "right_shift", "right_option"] }
                                 },
                                 "to": [
                                     {
                                         "key_code": "f5",
-                                        "modifiers": [
-                                            "left_control"
-                                        ]
+                                        "modifiers": ["left_control"]
                                     }
                                 ],
                                 "type": "basic"
@@ -361,21 +213,12 @@
                                 "description": "x = ctrl-r",
                                 "from": {
                                     "key_code": "x",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["right_command", "right_control", "right_shift", "right_option"] }
                                 },
                                 "to": [
                                     {
                                         "key_code": "r",
-                                        "modifiers": [
-                                            "left_control"
-                                        ]
+                                        "modifiers": ["left_control"]
                                     }
                                 ],
                                 "type": "basic"
@@ -384,22 +227,12 @@
                                 "description": "command + c = shift + F5 (vscode stop)",
                                 "from": {
                                     "key_code": "c",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "left_command",
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["left_command", "right_command", "right_control", "right_shift", "right_option"] }
                                 },
                                 "to": [
                                     {
                                         "key_code": "f5",
-                                        "modifiers": [
-                                            "left_shift"
-                                        ]
+                                        "modifiers": ["left_shift"]
                                     }
                                 ],
                                 "type": "basic"
@@ -408,21 +241,12 @@
                                 "description": "c = ctrl-c",
                                 "from": {
                                     "key_code": "c",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["right_command", "right_control", "right_shift", "right_option"] }
                                 },
                                 "to": [
                                     {
                                         "key_code": "c",
-                                        "modifiers": [
-                                            "left_control"
-                                        ]
+                                        "modifiers": ["left_control"]
                                     }
                                 ],
                                 "type": "basic"
@@ -431,21 +255,12 @@
                                 "description": "v = ctrl-v",
                                 "from": {
                                     "key_code": "v",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["right_command", "right_control", "right_shift", "right_option"] }
                                 },
                                 "to": [
                                     {
                                         "key_code": "v",
-                                        "modifiers": [
-                                            "left_control"
-                                        ]
+                                        "modifiers": ["left_control"]
                                     }
                                 ],
                                 "type": "basic"
@@ -454,21 +269,12 @@
                                 "description": "b = ctrl-b",
                                 "from": {
                                     "key_code": "b",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["right_command", "right_control", "right_shift", "right_option"] }
                                 },
                                 "to": [
                                     {
                                         "key_code": "b",
-                                        "modifiers": [
-                                            "left_control"
-                                        ]
+                                        "modifiers": ["left_control"]
                                     }
                                 ],
                                 "type": "basic"
@@ -482,23 +288,14 @@
                                 "from": {
                                     "key_code": "9",
                                     "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
+                                        "mandatory": ["right_command", "right_control", "right_shift", "right_option"],
+                                        "optional": ["any"]
                                     }
                                 },
                                 "to": [
                                     {
                                         "key_code": "left_arrow",
-                                        "modifiers": [
-                                            "right_option"
-                                        ]
+                                        "modifiers": ["right_option"]
                                     }
                                 ],
                                 "type": "basic"
@@ -507,23 +304,14 @@
                                 "from": {
                                     "key_code": "0",
                                     "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
+                                        "mandatory": ["right_command", "right_control", "right_shift", "right_option"],
+                                        "optional": ["any"]
                                     }
                                 },
                                 "to": [
                                     {
                                         "key_code": "right_arrow",
-                                        "modifiers": [
-                                            "right_option"
-                                        ]
+                                        "modifiers": ["right_option"]
                                     }
                                 ],
                                 "type": "basic"
@@ -537,88 +325,44 @@
                                 "from": {
                                     "key_code": "i",
                                     "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
+                                        "mandatory": ["right_command", "right_control", "right_shift", "right_option"],
+                                        "optional": ["any"]
                                     }
                                 },
-                                "to": [
-                                    {
-                                        "key_code": "up_arrow"
-                                    }
-                                ],
+                                "to": [{ "key_code": "up_arrow" }],
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "j",
                                     "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
+                                        "mandatory": ["right_command", "right_control", "right_shift", "right_option"],
+                                        "optional": ["any"]
                                     }
                                 },
-                                "to": [
-                                    {
-                                        "key_code": "left_arrow"
-                                    }
-                                ],
+                                "to": [{ "key_code": "left_arrow" }],
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "k",
                                     "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
+                                        "mandatory": ["right_command", "right_control", "right_shift", "right_option"],
+                                        "optional": ["any"]
                                     }
                                 },
-                                "to": [
-                                    {
-                                        "key_code": "down_arrow"
-                                    }
-                                ],
+                                "to": [{ "key_code": "down_arrow" }],
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "l",
                                     "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ],
-                                        "optional": [
-                                            "any"
-                                        ]
+                                        "mandatory": ["right_command", "right_control", "right_shift", "right_option"],
+                                        "optional": ["any"]
                                     }
                                 },
-                                "to": [
-                                    {
-                                        "key_code": "right_arrow"
-                                    }
-                                ],
+                                "to": [{ "key_code": "right_arrow" }],
                                 "type": "basic"
                             }
                         ]
@@ -630,20 +374,12 @@
                                 "description": "capslock = esc(click) | hyper(hold)",
                                 "from": {
                                     "key_code": "caps_lock",
-                                    "modifiers": {
-                                        "optional": [
-                                            "any"
-                                        ]
-                                    }
+                                    "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [
                                     {
                                         "key_code": "right_shift",
-                                        "modifiers": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_option"
-                                        ]
+                                        "modifiers": ["right_command", "right_control", "right_option"]
                                     }
                                 ],
                                 "type": "basic"
@@ -652,21 +388,12 @@
                                 "description": "spacebar = language switch",
                                 "from": {
                                     "key_code": "spacebar",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "right_command",
-                                            "right_control",
-                                            "right_shift",
-                                            "right_option"
-                                        ]
-                                    }
+                                    "modifiers": { "mandatory": ["right_command", "right_control", "right_shift", "right_option"] }
                                 },
                                 "to": [
                                     {
                                         "key_code": "spacebar",
-                                        "modifiers": [
-                                            "left_control"
-                                        ]
+                                        "modifiers": ["left_control"]
                                     }
                                 ],
                                 "type": "basic"
@@ -677,200 +404,78 @@
             },
             "devices": [
                 {
-                    "disable_built_in_keyboard_if_exists": false,
                     "fn_function_keys": [
                         {
-                            "from": {
-                                "key_code": "f1"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "h"
-                                }
-                            ]
+                            "from": { "key_code": "f1" },
+                            "to": [{ "key_code": "h" }]
                         }
                     ],
                     "identifiers": {
                         "is_keyboard": true,
-                        "is_pointing_device": false,
                         "product_id": 635,
                         "vendor_id": 1452
-                    },
-                    "ignore": false,
-                    "manipulate_caps_lock_led": true,
-                    "simple_modifications": [],
-                    "treat_as_built_in_keyboard": false
+                    }
                 },
                 {
-                    "disable_built_in_keyboard_if_exists": false,
                     "fn_function_keys": [
                         {
-                            "from": {
-                                "key_code": "f1"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "a"
-                                }
-                            ]
+                            "from": { "key_code": "f1" },
+                            "to": [{ "key_code": "a" }]
                         }
                     ],
                     "identifiers": {
                         "is_keyboard": true,
-                        "is_pointing_device": false,
                         "product_id": 34304,
                         "vendor_id": 1452
-                    },
-                    "ignore": false,
-                    "manipulate_caps_lock_led": true,
-                    "simple_modifications": [],
-                    "treat_as_built_in_keyboard": false
+                    }
                 },
                 {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
-                    "identifiers": {
-                        "is_keyboard": false,
-                        "is_pointing_device": true,
-                        "product_id": 635,
-                        "vendor_id": 1452
-                    },
-                    "ignore": true,
-                    "manipulate_caps_lock_led": false,
-                    "simple_modifications": [],
-                    "treat_as_built_in_keyboard": false
-                },
-                {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
                     "identifiers": {
                         "is_keyboard": true,
-                        "is_pointing_device": true,
                         "product_id": 20518,
                         "vendor_id": 12815
                     },
-                    "ignore": true,
-                    "manipulate_caps_lock_led": true,
-                    "simple_modifications": [],
-                    "treat_as_built_in_keyboard": false
-                },
-                {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "is_pointing_device": false,
-                        "product_id": 20518,
-                        "vendor_id": 12815
-                    },
-                    "ignore": false,
-                    "manipulate_caps_lock_led": true,
                     "simple_modifications": [
                         {
-                            "from": {
-                                "key_code": "delete_forward"
-                            },
-                            "to": [
-                                {
-                                    "consumer_key_code": "fast_forward"
-                                }
-                            ]
+                            "from": { "key_code": "delete_forward" },
+                            "to": [{ "consumer_key_code": "fast_forward" }]
                         },
                         {
-                            "from": {
-                                "key_code": "left_command"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "left_option"
-                                }
-                            ]
+                            "from": { "key_code": "left_command" },
+                            "to": [{ "key_code": "left_option" }]
                         },
                         {
-                            "from": {
-                                "key_code": "left_option"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "left_command"
-                                }
-                            ]
+                            "from": { "key_code": "left_option" },
+                            "to": [{ "key_code": "left_command" }]
                         },
                         {
-                            "from": {
-                                "key_code": "page_down"
-                            },
-                            "to": [
-                                {
-                                    "consumer_key_code": "rewind"
-                                }
-                            ]
+                            "from": { "key_code": "page_down" },
+                            "to": [{ "consumer_key_code": "rewind" }]
                         },
                         {
-                            "from": {
-                                "key_code": "page_up"
-                            },
-                            "to": [
-                                {
-                                    "consumer_key_code": "play_or_pause"
-                                }
-                            ]
+                            "from": { "key_code": "page_up" },
+                            "to": [{ "consumer_key_code": "play_or_pause" }]
                         },
                         {
-                            "from": {
-                                "key_code": "right_option"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "right_command"
-                                }
-                            ]
+                            "from": { "key_code": "right_option" },
+                            "to": [{ "key_code": "right_command" }]
                         }
-                    ],
-                    "treat_as_built_in_keyboard": false
+                    ]
                 },
                 {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
                     "identifiers": {
                         "is_keyboard": true,
-                        "is_pointing_device": false,
                         "product_id": 50489,
                         "vendor_id": 1133
                     },
-                    "ignore": false,
-                    "manipulate_caps_lock_led": true,
                     "simple_modifications": [
                         {
-                            "from": {
-                                "key_code": "left_option"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "left_command"
-                                }
-                            ]
+                            "from": { "key_code": "left_option" },
+                            "to": [{ "key_code": "left_command" }]
                         }
-                    ],
-                    "treat_as_built_in_keyboard": false
+                    ]
                 },
                 {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
-                    "identifiers": {
-                        "is_keyboard": false,
-                        "is_pointing_device": true,
-                        "product_id": 50489,
-                        "vendor_id": 1133
-                    },
-                    "ignore": true,
-                    "manipulate_caps_lock_led": false,
-                    "simple_modifications": [],
-                    "treat_as_built_in_keyboard": false
-                },
-                {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
                     "identifiers": {
                         "is_keyboard": true,
                         "is_pointing_device": true,
@@ -878,494 +483,137 @@
                         "vendor_id": 1155
                     },
                     "ignore": false,
-                    "manipulate_caps_lock_led": true,
                     "simple_modifications": [
                         {
-                            "from": {
-                                "key_code": "delete_forward"
-                            },
-                            "to": [
-                                {
-                                    "consumer_key_code": "fast_forward"
-                                }
-                            ]
+                            "from": { "key_code": "delete_forward" },
+                            "to": [{ "consumer_key_code": "fast_forward" }]
                         },
                         {
-                            "from": {
-                                "key_code": "left_command"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "left_option"
-                                }
-                            ]
+                            "from": { "key_code": "left_command" },
+                            "to": [{ "key_code": "left_option" }]
                         },
                         {
-                            "from": {
-                                "key_code": "left_option"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "left_command"
-                                }
-                            ]
+                            "from": { "key_code": "left_option" },
+                            "to": [{ "key_code": "left_command" }]
                         },
                         {
-                            "from": {
-                                "key_code": "page_down"
-                            },
-                            "to": [
-                                {
-                                    "consumer_key_code": "rewind"
-                                }
-                            ]
+                            "from": { "key_code": "page_down" },
+                            "to": [{ "consumer_key_code": "rewind" }]
                         },
                         {
-                            "from": {
-                                "key_code": "page_up"
-                            },
-                            "to": [
-                                {
-                                    "pointing_button": "button1"
-                                }
-                            ]
+                            "from": { "key_code": "page_up" },
+                            "to": [{ "pointing_button": "button1" }]
                         },
                         {
-                            "from": {
-                                "key_code": "right_option"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "right_command"
-                                }
-                            ]
+                            "from": { "key_code": "right_option" },
+                            "to": [{ "key_code": "right_command" }]
                         }
-                    ],
-                    "treat_as_built_in_keyboard": false
+                    ]
                 },
                 {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
                     "identifiers": {
                         "is_keyboard": true,
-                        "is_pointing_device": false,
                         "product_id": 21042,
                         "vendor_id": 1155
                     },
-                    "ignore": false,
-                    "manipulate_caps_lock_led": true,
                     "simple_modifications": [
                         {
-                            "from": {
-                                "key_code": "delete_forward"
-                            },
-                            "to": [
-                                {
-                                    "consumer_key_code": "fast_forward"
-                                }
-                            ]
+                            "from": { "key_code": "delete_forward" },
+                            "to": [{ "consumer_key_code": "fast_forward" }]
                         },
                         {
-                            "from": {
-                                "key_code": "left_command"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "left_option"
-                                }
-                            ]
+                            "from": { "key_code": "left_command" },
+                            "to": [{ "key_code": "left_option" }]
                         },
                         {
-                            "from": {
-                                "key_code": "left_option"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "left_command"
-                                }
-                            ]
+                            "from": { "key_code": "left_option" },
+                            "to": [{ "key_code": "left_command" }]
                         },
                         {
-                            "from": {
-                                "key_code": "page_down"
-                            },
-                            "to": [
-                                {
-                                    "consumer_key_code": "rewind"
-                                }
-                            ]
+                            "from": { "key_code": "page_down" },
+                            "to": [{ "consumer_key_code": "rewind" }]
                         },
                         {
-                            "from": {
-                                "key_code": "page_up"
-                            },
-                            "to": [
-                                {
-                                    "consumer_key_code": "play_or_pause"
-                                }
-                            ]
+                            "from": { "key_code": "page_up" },
+                            "to": [{ "consumer_key_code": "play_or_pause" }]
                         },
                         {
-                            "from": {
-                                "key_code": "right_option"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "right_command"
-                                }
-                            ]
+                            "from": { "key_code": "right_option" },
+                            "to": [{ "key_code": "right_command" }]
                         }
-                    ],
-                    "treat_as_built_in_keyboard": false
+                    ]
                 },
                 {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "is_pointing_device": false,
-                        "product_id": 49293,
-                        "vendor_id": 1133
-                    },
-                    "ignore": false,
-                    "manipulate_caps_lock_led": true,
-                    "simple_modifications": [],
-                    "treat_as_built_in_keyboard": false
-                },
-                {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
-                    "identifiers": {
-                        "is_keyboard": false,
-                        "is_pointing_device": true,
-                        "product_id": 49293,
-                        "vendor_id": 1133
-                    },
-                    "ignore": true,
-                    "manipulate_caps_lock_led": false,
-                    "simple_modifications": [],
-                    "treat_as_built_in_keyboard": false
-                },
-                {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
-                    "identifiers": {
-                        "is_keyboard": false,
-                        "is_pointing_device": false,
-                        "product_id": 34304,
-                        "vendor_id": 1452
-                    },
-                    "ignore": false,
-                    "manipulate_caps_lock_led": false,
-                    "simple_modifications": [],
-                    "treat_as_built_in_keyboard": false
-                },
-                {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
                     "identifiers": {
                         "is_keyboard": true,
                         "is_pointing_device": true,
                         "product_id": 16387,
                         "vendor_id": 12625
                     },
-                    "ignore": true,
-                    "manipulate_caps_lock_led": true,
                     "simple_modifications": [
                         {
-                            "from": {
-                                "key_code": "left_option"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "left_command"
-                                }
-                            ]
+                            "from": { "key_code": "left_option" },
+                            "to": [{ "key_code": "left_command" }]
                         }
-                    ],
-                    "treat_as_built_in_keyboard": false
+                    ]
                 },
                 {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
                     "identifiers": {
                         "is_keyboard": true,
-                        "is_pointing_device": false,
                         "product_id": 16387,
                         "vendor_id": 12625
                     },
                     "ignore": true,
-                    "manipulate_caps_lock_led": true,
                     "simple_modifications": [
                         {
-                            "from": {
-                                "key_code": "left_command"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "left_option"
-                                }
-                            ]
+                            "from": { "key_code": "left_command" },
+                            "to": [{ "key_code": "left_option" }]
                         },
                         {
-                            "from": {
-                                "key_code": "left_option"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "left_command"
-                                }
-                            ]
+                            "from": { "key_code": "left_option" },
+                            "to": [{ "key_code": "left_command" }]
                         }
-                    ],
-                    "treat_as_built_in_keyboard": false
+                    ]
                 },
                 {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "is_pointing_device": false,
-                        "product_id": 6944,
-                        "vendor_id": 6940
-                    },
-                    "ignore": false,
-                    "manipulate_caps_lock_led": true,
-                    "simple_modifications": [],
-                    "treat_as_built_in_keyboard": false
-                },
-                {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
                     "identifiers": {
                         "is_keyboard": true,
                         "is_pointing_device": true,
                         "product_id": 9248,
                         "vendor_id": 9639
                     },
-                    "ignore": false,
-                    "manipulate_caps_lock_led": true,
-                    "simple_modifications": [],
-                    "treat_as_built_in_keyboard": false
+                    "ignore": false
                 },
                 {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
                     "identifiers": {
                         "is_keyboard": true,
-                        "is_pointing_device": false,
-                        "product_id": 835,
-                        "vendor_id": 1452
-                    },
-                    "ignore": false,
-                    "manipulate_caps_lock_led": true,
-                    "simple_modifications": [],
-                    "treat_as_built_in_keyboard": false
-                },
-                {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
-                    "identifiers": {
-                        "is_keyboard": false,
-                        "is_pointing_device": true,
-                        "product_id": 835,
-                        "vendor_id": 1452
-                    },
-                    "ignore": true,
-                    "manipulate_caps_lock_led": false,
-                    "simple_modifications": [],
-                    "treat_as_built_in_keyboard": false
-                },
-                {
-                    "disable_built_in_keyboard_if_exists": false,
-                    "fn_function_keys": [],
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "is_pointing_device": false,
                         "product_id": 49975,
                         "vendor_id": 1133
                     },
-                    "ignore": false,
-                    "manipulate_caps_lock_led": true,
                     "simple_modifications": [
                         {
-                            "from": {
-                                "key_code": "left_option"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "left_command"
-                                }
-                            ]
+                            "from": { "key_code": "left_command" },
+                            "to": [{ "key_code": "left_option" }]
                         },
                         {
-                            "from": {
-                                "key_code": "left_command"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "left_option"
-                                }
-                            ]
+                            "from": { "key_code": "left_option" },
+                            "to": [{ "key_code": "left_command" }]
                         },
                         {
-                            "from": {
-                                "key_code": "right_option"
-                            },
-                            "to": [
-                                {
-                                    "key_code": "right_command"
-                                }
-                            ]
-                        }
-                    ],
-                    "treat_as_built_in_keyboard": false
-                }
-            ],
-            "fn_function_keys": [
-                {
-                    "from": {
-                        "key_code": "f1"
-                    },
-                    "to": [
-                        {
-                            "consumer_key_code": "display_brightness_decrement"
-                        }
-                    ]
-                },
-                {
-                    "from": {
-                        "key_code": "f2"
-                    },
-                    "to": [
-                        {
-                            "consumer_key_code": "display_brightness_increment"
-                        }
-                    ]
-                },
-                {
-                    "from": {
-                        "key_code": "f3"
-                    },
-                    "to": [
-                        {
-                            "apple_vendor_keyboard_key_code": "mission_control"
-                        }
-                    ]
-                },
-                {
-                    "from": {
-                        "key_code": "f4"
-                    },
-                    "to": [
-                        {
-                            "apple_vendor_keyboard_key_code": "spotlight"
-                        }
-                    ]
-                },
-                {
-                    "from": {
-                        "key_code": "f5"
-                    },
-                    "to": [
-                        {
-                            "consumer_key_code": "dictation"
-                        }
-                    ]
-                },
-                {
-                    "from": {
-                        "key_code": "f6"
-                    },
-                    "to": [
-                        {
-                            "key_code": "f6"
-                        }
-                    ]
-                },
-                {
-                    "from": {
-                        "key_code": "f7"
-                    },
-                    "to": [
-                        {
-                            "consumer_key_code": "rewind"
-                        }
-                    ]
-                },
-                {
-                    "from": {
-                        "key_code": "f8"
-                    },
-                    "to": [
-                        {
-                            "consumer_key_code": "play_or_pause"
-                        }
-                    ]
-                },
-                {
-                    "from": {
-                        "key_code": "f9"
-                    },
-                    "to": [
-                        {
-                            "consumer_key_code": "fast_forward"
-                        }
-                    ]
-                },
-                {
-                    "from": {
-                        "key_code": "f10"
-                    },
-                    "to": [
-                        {
-                            "consumer_key_code": "mute"
-                        }
-                    ]
-                },
-                {
-                    "from": {
-                        "key_code": "f11"
-                    },
-                    "to": [
-                        {
-                            "consumer_key_code": "volume_decrement"
-                        }
-                    ]
-                },
-                {
-                    "from": {
-                        "key_code": "f12"
-                    },
-                    "to": [
-                        {
-                            "consumer_key_code": "volume_increment"
+                            "from": { "key_code": "right_option" },
+                            "to": [{ "key_code": "right_command" }]
                         }
                     ]
                 }
             ],
             "name": "Default",
-            "parameters": {
-                "delay_milliseconds_before_open_device": 1000
-            },
             "selected": true,
             "simple_modifications": [
                 {
-                    "from": {
-                        "key_code": "page_up"
-                    },
-                    "to": [
-                        {
-                            "pointing_button": "button1"
-                        }
-                    ]
+                    "from": { "key_code": "page_up" },
+                    "to": [{ "pointing_button": "button1" }]
                 }
-            ],
-            "virtual_hid_keyboard": {
-                "country_code": 0,
-                "indicate_sticky_modifier_keys_state": true,
-                "mouse_key_xy_scale": 100
-            }
+            ]
         }
     ]
 }
