@@ -1,0 +1,21 @@
+[user]
+	name = kingsotn
+	email = kingstonyip@gmail.com
+[core]
+	excludesfile = ~/.gitignore_global
+[alias]
+	add-commit = !git add -A && git commit
+	st = status
+	lg = log --oneline --graph --decorate --all
+	co = checkout
+	br = branch
+	cp = cherry-pick
+	rb = rebase
+	d = diff
+	dc = diff --cached
+	undo = reset HEAD~1 --mixed
+	last = log -1 HEAD --stat
+[credential "https://github.com"]
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = !gh auth git-credential

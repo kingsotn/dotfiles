@@ -49,6 +49,15 @@
     "disabledApps" : {
 
     },
+    "doubleClickTitleBar" : {
+      "int" : 0
+    },
+    "doubleClickTitleBarIgnoredApps" : {
+
+    },
+    "doubleClickTitleBarRestore" : {
+      "int" : 0
+    },
     "dragFromStage" : {
       "int" : 0
     },
@@ -56,7 +65,7 @@
       "int" : 1
     },
     "footprintAlpha" : {
-      "float" : 0.30000001192092896
+      "float" : 0.3
     },
     "footprintAnimationDurationMultiplier" : {
       "float" : 0
@@ -79,6 +88,9 @@
     "hideMenubarIcon" : {
       "bool" : false
     },
+    "ignoreDragSnapToo" : {
+      "int" : 0
+    },
     "ignoredSnapAreas" : {
       "int" : 0
     },
@@ -86,7 +98,7 @@
 
     },
     "launchOnLogin" : {
-      "bool" : false
+      "bool" : true
     },
     "minimumWindowHeight" : {
       "float" : 0
@@ -107,7 +119,7 @@
       "int" : 0
     },
     "moveCursorAcrossDisplays" : {
-      "int" : 0
+      "int" : 2
     },
     "notifiedOfProblemApps" : {
       "bool" : false
@@ -181,6 +193,9 @@
     "SUEnableAutomaticChecks" : {
       "bool" : false
     },
+    "systemWideMouseDown" : {
+      "int" : 0
+    },
     "todo" : {
       "int" : 0
     },
@@ -212,16 +227,20 @@
       "modifierFlags" : 1966080
     },
     "bottomLeft" : {
-      "keyCode" : 38,
-      "modifierFlags" : 786432
+      "keyCode" : 99,
+      "modifierFlags" : 0
     },
     "bottomRight" : {
-      "keyCode" : 40,
-      "modifierFlags" : 786432
+      "keyCode" : 118,
+      "modifierFlags" : 0
     },
     "center" : {
       "keyCode" : 8,
       "modifierFlags" : 786432
+    },
+    "centerHalf" : {
+      "keyCode" : 3,
+      "modifierFlags" : 1966080
     },
     "centerThird" : {
       "keyCode" : 3,
@@ -237,7 +256,7 @@
     },
     "larger" : {
       "keyCode" : 24,
-      "modifierFlags" : 786432
+      "modifierFlags" : 1966080
     },
     "lastThird" : {
       "keyCode" : 5,
@@ -281,7 +300,7 @@
     },
     "smaller" : {
       "keyCode" : 27,
-      "modifierFlags" : 786432
+      "modifierFlags" : 1966080
     },
     "toggleTodo" : {
       "keyCode" : 11,
@@ -292,13 +311,13 @@
       "modifierFlags" : 1966080
     },
     "topLeft" : {
-      "keyCode" : 32,
-      "modifierFlags" : 786432
+      "keyCode" : 122,
+      "modifierFlags" : 0
     },
     "topRight" : {
-      "keyCode" : 34,
-      "modifierFlags" : 786432
+      "keyCode" : 120,
+      "modifierFlags" : 0
     }
   },
-  "version" : "74"
+  "version" : "81"
 }

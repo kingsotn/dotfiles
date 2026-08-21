@@ -1,137 +1,140 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="eastwood"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+source "$ZSH/oh-my-zsh.sh"
 
-source $ZSH/oh-my-zsh.sh
-
-# user@host and removing conda env for (base)
-set_conda_prompt() {
-    if [[ -n "$CONDA_DEFAULT_ENV" && "$CONDA_DEFAULT_ENV" != "base" ]]; then
-        PS1="($CONDA_DEFAULT_ENV) %{$fg[cyan]%}kingston@%m%{$reset_color%} $(git_custom_status)%{$fg[cyan]%}[%~% ]%{$reset_color%}%B$%b"
-    else
-        # Apply cyan color for the entire prompt in the default case
-        PS1="%{$fg[cyan]%}kingston@%m $(git_custom_status)[%~% ]%{$reset_color%}%B$%b"
-    fi
+set_prompt() {
+  PS1="%{$fg[cyan]%}kingston@%m $(git_custom_status)[%~% ]%{$reset_color%}%B$%b "
 }
-# Add the function to the precmd_functions array
-precmd_functions+=(set_conda_prompt)
+precmd_functions+=(set_prompt)
 
-# User configuration
+export EDITOR="cursor --wait"
 
-# export MANPATH="/usr/local/man:$MANPATH"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-export PATH=/opt/homebrew/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin
-export PATH=~/anaconda/bin:"$PATH"
-export PATH="/opt/homebrew/bin/ghidraRun/bin:$PATH"
-export JAVA_HOME="/opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk"
-export PATH=$JAVA_HOME/bin:$PATH
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
 alias python=python3
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/homebrew/Caskroom/miniconda/base/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+alias claude="claude --dangerously-skip-permissions"
+alias cu='claude /usage'
 
-alias cog=./cog.sh
+# Codex has no CLI for usage. Query account/rateLimits/read via app-server JSON-RPC.
+cou() {
+  python3 - <<'PY'
+import json, select, subprocess, sys, time
+from datetime import datetime, timezone
+
+def send(proc, obj):
+    proc.stdin.write(json.dumps(obj) + "\n")
+    proc.stdin.flush()
+
+def read_until(proc, pred, timeout=15.0):
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        ready, _, _ = select.select([proc.stdout], [], [], max(0.0, deadline - time.time()))
+        if not ready:
+            continue
+        line = proc.stdout.readline()
+        if not line:
+            break
+        try:
+            msg = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if pred(msg):
+            return msg
+    raise TimeoutError("timed out waiting for codex app-server")
+
+def fmt_window(label, w):
+    if not w:
+        return f"  {label}: n/a"
+    used = w.get("usedPercent")
+    mins = w.get("windowDurationMins")
+    resets = w.get("resetsAt")
+    bits = []
+    if used is not None:
+        bits.append(f"{used}% used")
+    if mins:
+        if mins % 1440 == 0:
+            bits.append(f"{mins // 1440}d window")
+        elif mins % 60 == 0:
+            bits.append(f"{mins // 60}h window")
+        else:
+            bits.append(f"{mins}m window")
+    if resets:
+        when = datetime.fromtimestamp(resets, tz=timezone.utc).astimezone()
+        remaining = resets - time.time()
+        if remaining > 0:
+            h, rem = divmod(int(remaining), 3600)
+            d, h = divmod(h, 24)
+            m = rem // 60
+            eta = f"{d}d {h}h" if d else (f"{h}h {m}m" if h else f"{m}m")
+            bits.append(f"resets in {eta} ({when:%a %b %-d %-I:%M%p})")
+        else:
+            bits.append(f"reset due ({when:%a %b %-d %-I:%M%p})")
+    return f"  {label}: " + " · ".join(bits)
+
+proc = subprocess.Popen(
+    ["codex", "app-server"],
+    stdin=subprocess.PIPE,
+    stdout=subprocess.PIPE,
+    stderr=subprocess.DEVNULL,
+    text=True,
+    bufsize=1,
+)
+try:
+    send(proc, {
+        "jsonrpc": "2.0",
+        "id": 0,
+        "method": "initialize",
+        "params": {"clientInfo": {"name": "cou", "title": "cou", "version": "1.0"}},
+    })
+    read_until(proc, lambda m: m.get("id") == 0)
+    send(proc, {"jsonrpc": "2.0", "method": "initialized", "params": {}})
+    send(proc, {"jsonrpc": "2.0", "id": 1, "method": "account/rateLimits/read", "params": {}})
+    resp = read_until(proc, lambda m: m.get("id") == 1)
+finally:
+    proc.terminate()
+    try:
+        proc.wait(timeout=2)
+    except Exception:
+        proc.kill()
+
+if "error" in resp:
+    print(json.dumps(resp["error"], indent=2), file=sys.stderr)
+    sys.exit(1)
+
+result = resp.get("result") or {}
+rl = result.get("rateLimits") or {}
+plan = rl.get("planType") or "unknown"
+print(f"Codex usage ({plan})")
+print(fmt_window("Primary", rl.get("primary")))
+print(fmt_window("Secondary", rl.get("secondary")))
+credits = result.get("rateLimitResetCredits") or {}
+available = credits.get("availableCount")
+if available is not None:
+    print(f"  Resets available: {available}")
+    for c in credits.get("credits") or []:
+        if c.get("status") != "available":
+            continue
+        exp = c.get("expiresAt")
+        exp_s = ""
+        if exp:
+            when = datetime.fromtimestamp(exp, tz=timezone.utc).astimezone()
+            exp_s = f" · expires {when:%b %-d}"
+        title = c.get("title") or c.get("resetType") or "reset"
+        print(f"    - {title}{exp_s}")
+reached = rl.get("rateLimitReachedType")
+if reached:
+    print(f"  Limit reached: {reached}")
+PY
+}
+
+# Private machine overrides. Not in this repo.
+[[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
