@@ -34,6 +34,8 @@ curl -fsSL https://bun.sh/install | bash
 
 gh auth login
 cp -R claude/hooks ~/.claude/hooks
+cp -R claude/skills ~/.claude/skills
+cp claude/CLAUDE.md ~/.claude/CLAUDE.md
 cp claude/settings.json ~/.claude/settings.json
 cp claude/statusline.sh ~/.claude/statusline.sh
 chmod +x ~/.claude/statusline.sh ~/.claude/hooks/*.sh ~/.claude/hooks/km/*.sh
@@ -44,6 +46,6 @@ Node comes from nvm, not Homebrew. Do not `brew install node`.
 ## Layout
 
 - `.zshrc`, `.zprofile`, `Brewfile`, `.gitconfig`
-- `claude/` — Claude Code `settings.json`, hooks, status line (see `claude/README.md`)
+- `claude/` — Claude Code `CLAUDE.md`, skills, hooks, `settings.json`, status line (see `claude/README.md`)
 - `karabiner/`, `RectangleConfig.json`, `iterm2_config.json`
 - `sketchybar/`, `skhd/`, `yabai/` — leftover tiling-WM configs; current setup uses Rectangle

@@ -3,6 +3,28 @@
 Config for `~/.claude`. Credentials (`~/.claude/.credentials.json`), history, sessions, and
 `settings.local.json` are never copied here.
 
+## CLAUDE.md
+
+Global agent instructions (persona, style, git discipline, ops gates). The last line imports
+`~/.claude/CLAUDE.private.md` — machine-private rules that never enter this repo. Create an empty
+one if you don't have any.
+
+```sh
+cp claude/CLAUDE.md ~/.claude/CLAUDE.md
+touch ~/.claude/CLAUDE.private.md
+```
+
+## skills/
+
+- `km` — "kingston mode": orchestrator/worker model routing, quota cascade, verify + discipline
+  rules. Enforced by `hooks/km/`.
+- `pm` — how the orchestrator dispatches Cursor subagents (`scripts/cursor-task.sh`) and gates
+  their diffs; `km` delegates here.
+
+```sh
+cp -R claude/skills/* ~/.claude/skills/
+```
+
 ## settings.json
 
 Model/effort defaults, env flags, enabled plugins, status line, and the hook wiring below.

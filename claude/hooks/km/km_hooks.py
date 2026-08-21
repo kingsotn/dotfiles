@@ -9,7 +9,11 @@ import sys
 from pathlib import Path
 
 STATE_ROOT = Path.home() / ".claude" / "km-state"
-SKILL_PATH = Path.home() / ".cursor" / "skills" / "km" / "SKILL.md"
+_SKILL_CANDIDATES = (
+    Path.home() / ".claude" / "skills" / "km" / "SKILL.md",
+    Path.home() / ".cursor" / "skills" / "km" / "SKILL.md",
+)
+SKILL_PATH = next((p for p in _SKILL_CANDIDATES if p.is_file()), _SKILL_CANDIDATES[0])
 
 KM_TRIGGERS = re.compile(r"/(?:km|kingston-mode)\b|kingston\s+mode", re.I)
 PROD_GO_TRIGGERS = re.compile(
