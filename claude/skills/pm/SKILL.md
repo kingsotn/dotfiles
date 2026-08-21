@@ -18,7 +18,7 @@ The whole point: Grok 4.5 high is smarter than Composer Fast at still-cheap Firs
 
 1. **Spec.** Restate the goal in your own words. Decompose into independent units (one per subagent). If the task is fuzzy or expensive to redo, run `kingston-alignment-quiz` first.
 2. **Dispatch.** One subagent per unit. Give each a *complete, self-contained* brief: goal, constraints, files/dirs in scope, what "done" looks like, and to report what it changed. Independent units → dispatch in parallel (background). Capture each `session_id`.
-3. **Gate (objective, autonomous).** Run the project's real checks *yourself* before reading the diff — tests, build, lint/type-check, smoke (this repo: `uv run python mock/run.py --limit 1`, `pytest`, `docker build`, and the DECISIONS.html/CI pairing). Red → resume the subagent with the exact failure. **Do not consult the human for a mechanical failure.** Caveat: the gate is the diff *passing a spec you read*, not "is it green" — weak agents game green by deleting asserts or swallowing errors. If a test changed, read the change.
+3. **Gate (objective, autonomous).** Run the project's real checks *yourself* before reading the diff — tests, build, lint/type-check, smoke (whatever this repo's CLAUDE.md/README names as the real gate). Red → resume the subagent with the exact failure. **Do not consult the human for a mechanical failure.** Caveat: the gate is the diff *passing a spec you read*, not "is it green" — weak agents game green by deleting asserts or swallowing errors. If a test changed, read the change.
 4. **Review.** Read the actual diff (`git diff`), not the summary. Hold a **P0 bar**: correctness bugs, security, scope/spec misses, plus the standing rubric below. Skip style nits — Grok's code is fine.
 5. **Iterate / fix-or-explain.** Problems? Decide resume vs. fresh (below) and send specific, surgical feedback — or, when its choice is non-obvious, make it **explain itself** before you accept. Repeat until it clears gate + bar. Don't fix it yourself unless it's a one-line touch-up faster than a round-trip.
 6. **Integrate & verify.** You own the merge: resolve cross-unit conflicts, re-run the gate on the merged tree, confirm it actually works, report outcome honestly.
@@ -36,7 +36,7 @@ Stupid mistakes are the same every time — catch them mechanically:
 - **Hallucinated surface** — APIs/imports/flags that don't exist in this repo.
 - **Leftovers** — debug prints, commented-out code, TODOs it invented, stray files.
 - **Convention drift** — ignores CLAUDE.md, business-vs-config split, existing patterns nearby.
-- **Project gates** — business-rule change without DECISIONS.html; PR-template sections unfilled.
+- **Project gates** — whatever this repo requires alongside a change (decision record, PR-template sections, changelog) left undone.
 
 ### Resume vs. fresh dispatch
 Resume keeps the agent's context (cheap cache hits, keeps the thread) — but it also keeps its prior *reasoning*, including wrong turns. Default to resume for tight iteration; start fresh when the context is more liability than asset.

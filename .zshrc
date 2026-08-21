@@ -4,7 +4,7 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 source "$ZSH/oh-my-zsh.sh"
 
 set_prompt() {
-  PS1="%{$fg[cyan]%}kingston@%m $(git_custom_status)[%~% ]%{$reset_color%}%B$%b "
+  PS1="%{$fg[cyan]%}%n@%m $(git_custom_status)[%~% ]%{$reset_color%}%B$%b "
 }
 precmd_functions+=(set_prompt)
 
