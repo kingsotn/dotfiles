@@ -61,6 +61,12 @@ BRIGHT_MAGENTA="\033[95m"
 # Net lines delta
 NET_LINES=$((LINES_ADD - LINES_DEL))
 
+# Agent/session name — prefer .agent.name (subagent sessions started with
+# --agent), fall back to .session_name (set via /rename, shown in ListAgents
+# and used for cross-session messaging). Older CC versions may have neither,
+# in which case this segment is simply omitted.
+AGENT_NAME=$(echo "$INPUT" | jq -r '.agent.name // .session_name // empty')
+
 # Git branch + worktree
 CWD=$(echo "$INPUT" | jq -r '.cwd // ""')
 WORKTREE_BRANCH=$(echo "$INPUT" | jq -r '.worktree.branch // ""')
@@ -120,7 +126,14 @@ MODEL_STR="${BRIGHT_MAGENTA}${MODEL_SHORT}${RESET}"
 # Context segment
 CTX_STR="${PCT_COLOR}${BAR} ${USED_PCT}%/${CTX_LABEL}${RESET}"
 
-echo -e "${BRANCH_STR}${SEP}${MODEL_STR}${SEP}${CTX_STR}"
+# Agent/session name segment (omitted entirely if not available)
+if [ -n "$AGENT_NAME" ]; then
+  AGENT_STR="${BOLD}${GREEN}@${AGENT_NAME}${RESET}${SEP}"
+else
+  AGENT_STR=""
+fi
+
+echo -e "${AGENT_STR}${BRANCH_STR}${SEP}${MODEL_STR}${SEP}${CTX_STR}"
 
 # ── Line 2: secondary stats ────────────────────────────────────────────────────
 echo -e "${DIM}cost:${RESET}${CYAN}${COST_FMT}${RESET}${SEP}${GREEN}+${LINES_ADD}${RESET}${RED}-${LINES_DEL}${RESET}${DIM}(${NET_LINES})${RESET}${SEP}${DIM}${DURATION_FMT}${RESET}"
