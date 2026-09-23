@@ -6,7 +6,7 @@ Mirrors the Mac setup (Karabiner + skhd/yabai + iTerm) on a NIZ Plum 68 in facto
 - `keyd/default.conf` → `/etc/keyd/default.conf`: Caps = Hyper, Cmd acts as Ctrl for shortcuts,
   Opt = Alt, Cmd+1..9 = tab N, Hyper+ijkl arrows, Hyper+Cmd/Opt line/word jumps
 - `keyd/app.conf` → `~/.config/keyd/app.conf`: per-app overrides (terminal copy/paste, kitty iTerm keys)
-- `i3/` → `~/.config/i3/`: Hyper+1/2/3/6/7 focus-or-launch apps like Karabiner `open -a`,
+- `i3/` → `~/.config/i3/` (symlinked): Cmd+Tab Mac-style switcher via alttab, Hyper+1/2/3/6/7 focus-or-launch apps like Karabiner `open -a`,
   Opt+ijkl focus, Shift+Opt+wasd move, Shift+Opt+N send to workspace
 - `kitty/kitty.conf` → `~/.config/kitty/`: iTerm2 keys (Cmd+D split, Cmd+T tab, Cmd+[ ] panes, ...)
 - `.zshrc`, `.xprofile` → `~/`: oh-my-zsh prompt from the Mac + autosuggestions/syntax-highlighting
@@ -17,7 +17,7 @@ Mirrors the Mac setup (Karabiner + skhd/yabai + iTerm) on a NIZ Plum 68 in facto
 # keyd (not in Ubuntu repos): build latest release
 git clone https://github.com/rvaiya/keyd && cd keyd && git checkout "$(git describe --tags --abbrev=0)"
 make && sudo make install && sudo systemd-sysusers
-sudo apt install -y python3-xlib kitty
+sudo apt install -y python3-xlib kitty alttab
 sudo usermod -aG keyd "$USER"
 sudo cp linux/keyd/default.conf /etc/keyd/default.conf && sudo systemctl enable --now keyd
 
