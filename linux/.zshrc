@@ -77,9 +77,9 @@ source $ZSH/oh-my-zsh.sh
 # Prompt from Mac dotfiles: cyan user@host, git status, [path] $ (conda env shown when not base)
 set_conda_prompt() {
     if [[ -n "$CONDA_DEFAULT_ENV" && "$CONDA_DEFAULT_ENV" != "base" ]]; then
-        PS1="($CONDA_DEFAULT_ENV) %{$fg[cyan]%}kingston@%m%{$reset_color%} $(git_custom_status)%{$fg[cyan]%}[%~% ]%{$reset_color%}%B$%b"
+        PS1="($CONDA_DEFAULT_ENV) %{$fg[cyan]%}kingston@%m%{$reset_color%} $(git_custom_status)%{$fg[cyan]%}[%~% ]%{$reset_color%}%B$%b "
     else
-        PS1="%{$fg[cyan]%}kingston@%m $(git_custom_status)[%~% ]%{$reset_color%}%B$%b"
+        PS1="%{$fg[cyan]%}kingston@%m $(git_custom_status)[%~% ]%{$reset_color%}%B$%b "
     fi
 }
 precmd_functions+=(set_conda_prompt)
