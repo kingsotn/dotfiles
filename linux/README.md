@@ -8,7 +8,7 @@ Mirrors the Mac setup (Karabiner + skhd/yabai + iTerm) on a NIZ Plum 68 in facto
 - `keyd/app.conf` → `~/.config/keyd/app.conf`: per-app overrides (terminal copy/paste, kitty iTerm keys)
 - `i3/` → `~/.config/i3/` (symlinked): Cmd+Tab Mac-style switcher via alttab, Hyper+1/2/3/6/7 focus-or-launch apps like Karabiner `open -a`,
   Opt+ijkl focus, Shift+Opt+wasd move, Shift+Opt+N send to workspace
-- `bin/ssh-watch` → `~/.local/bin/` (symlinked): live SSH sessions + GPU users; Hyper+4 opens it beside btop (`i3/monitor.sh`)
+- `bin/ssh-watch` → `~/.local/bin/` (symlinked): live SSH sessions + GPU users; Hyper+4 opens it with nvidia-smi below and btop beside (`i3/monitor.sh`)
 - `btop/btop.conf` → `~/.config/btop/` (symlinked): CPU/GPU/RAM/processes, no net/disks
 - `kitty/kitty.conf` → `~/.config/kitty/`: iTerm2 keys (Cmd+D split, Cmd+T tab, Cmd+[ ] panes, ...)
 - `.zshrc`, `.xprofile` → `~/`: oh-my-zsh prompt from the Mac + autosuggestions/syntax-highlighting
