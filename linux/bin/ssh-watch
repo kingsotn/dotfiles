@@ -9,6 +9,7 @@ import os
 import re
 import subprocess
 import time
+from datetime import datetime
 
 B, D, C, Y, G, RED, R = "\033[1m", "\033[2m", "\033[36m", "\033[33m", "\033[32m", "\033[31m", "\033[0m"
 REFRESH = 2
@@ -121,17 +122,18 @@ def sessions(procs, names):
     return out
 
 
-EVENT_RE = re.compile(r"^(\S+ \S+ (\d\d:\d\d)):\d\d .*?ssh-session\((\S+)\): (.*)$")
+EVENT_RE = re.compile(r"^(\S+) .*?ssh-session\((\S+)\): (.*)$")
 
 
 def events(names):
-    log = run("journalctl", "-u", "tailscaled", "--since", "-24h", "-o", "short", "--no-pager")
+    log = run("journalctl", "-u", "tailscaled", "--since", "-7d", "-o", "short-iso", "--no-pager")
     who, out = {}, []
     for line in log.splitlines():
         m = EVENT_RE.match(line)
         if not m:
             continue
-        _, hhmm, sess, msg = m.groups()
+        stamp, sess, msg = m.groups()
+        hhmm = datetime.fromisoformat(stamp).strftime("%a %b %d %H:%M")
         if c := re.search(r'new SSH connection from \S+ \(([^)]+)\) to ssh-user "([^"]+)"', msg):
             ip, user = c.groups()
             who[sess] = (user, names.get(ip, ip))
@@ -146,7 +148,7 @@ def events(names):
 def render():
     names = peer_names()
     procs = processes()
-    lines = [f"{B}SSH{R}  {D}{time.strftime('%H:%M:%S')}{R}", ""]
+    lines = [f"{B}SSH{R}  {D}{time.strftime('%a %b %d  %H:%M:%S')}{R}", ""]
     active = sessions(procs, names)
     for s in active:
         idle = f"  idle {ago(s['idle'])}" if s["idle"] is not None else ""
@@ -154,9 +156,9 @@ def render():
         lines += [f"    {D}{d}{R}" for d in s["doing"]]
     if not active:
         lines.append(f"{D}no active sessions{R}")
-    lines += ["", f"{B}Recent{R}"]
+    lines += ["", f"{B}Recent{R}  {D}(7 days){R}"]
     ev = events(names)
-    lines += [f"  {D}{t}{R}  {u:<9} {p:<8} {what}" for t, u, p, what in ev] or [f"  {D}none in the last 24h{R}"]
+    lines += [f"  {D}{t}{R}  {u:<9} {p:<8} {what}" for t, u, p, what in ev] or [f"  {D}none in the last 7 days{R}"]
     return "\n".join(lines)
 
 
