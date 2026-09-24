@@ -291,4 +291,4 @@ exec --no-startup-id keyd-application-mapper -d
 
 # Cmd+Tab / Cmd+Shift+Tab: Mac-style switcher. keyd turns Cmd+Tab into a held Alt+Tab;
 # alttab grabs Alt+Tab itself and switches when Cmd is released.
-exec_always --no-startup-id pkill -x alttab; exec alttab -w 1 -d 1 -b 0 -s 2 -t 136x136 -i 96x96 -bg '#262626' -fg '#e8e8e8' -frame '#5e5e5e' -inact '#262626' -bc '#262626' -bw 14 -font 'xft:sans-11'
+exec_always --no-startup-id "pkill -x alttab; exec alttab -w 1 -d 1 -b 0 -s 2 -t 136x136 -i 96x96 -bg '#262626' -fg '#e8e8e8' -frame '#5e5e5e' -inact '#262626' -bc '#262626' -bw 14 -font 'xft:sans-11'"
