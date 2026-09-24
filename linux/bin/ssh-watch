@@ -1,60 +1,177 @@
-#!/usr/bin/env bash
-# Live dashboard of SSH sessions on this machine (Hyper+4).
-# Shows who is connected over Tailscale SSH, what they're running, and recent SSH log events.
+#!/usr/bin/env python3
+"""Live, compact view of SSH sessions on this machine (Hyper+4).
 
-B=$'\e[1m' D=$'\e[2m' C=$'\e[36m' Y=$'\e[33m' G=$'\e[32m' R=$'\e[0m'
+One line per active Tailscale SSH session (user, machine, tty, age, idle) with what it
+is running underneath, then one line per recent connect/disconnect event.
+"""
+import json
+import os
+import re
+import subprocess
+import time
 
-peer_name() {  # Tailscale IP -> machine name
-  tailscale status --json 2>/dev/null |
-    jq -r --arg ip "$1" '.Peer[] | select(.TailscaleIPs | index($ip)) | .HostName' | head -1
-}
+B, D, C, Y, G, RED, R = "\033[1m", "\033[2m", "\033[36m", "\033[33m", "\033[32m", "\033[31m", "\033[0m"
+REFRESH = 2
+EVENTS = 6
 
-render() {
-  printf '%sSSH sessions%s  %s%s%s\n\n' "$B" "$R" "$D" "$(date +%T)" "$R"
-  local found=0
-  # who: user tty date time (host) -- keep sessions whose host looks like an IP
-  while read -r user tty day time host; do
-    host=${host#(}; host=${host%)}
-    # only remote logins (IPv4/IPv6 host), not the local X display or tmux panes
-    [[ $host =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ || $host =~ ^[0-9a-f]*:[0-9a-f:]{3,}$ ]] || continue
-    found=1
-    local name idle
-    name=$(peer_name "$host")
-    idle=$(w -h "$user" 2>/dev/null | awk -v t="$tty" '$2==t {print $5}')
-    printf '%s%s%s  %s  from %s%s%s (%s)  since %s  idle %s\n' \
-      "$B$C" "$user" "$R" "$tty" "$Y" "${name:-?}" "$R" "$host" "$time" "${idle:--}"
-    ps --forest -o etime=,args= -t "$tty" 2>/dev/null | sed "s/^/    /"
-    # tmux started from this session: show what each pane is running
-    if ps -o args= -t "$tty" | grep -q '^tmux'; then
-      tmux -L default list-panes -a -F '    tmux #{session_name}:#{window_index}.#{pane_index}  #{pane_current_command}  #{pane_current_path}' 2>/dev/null
-    fi
-    echo
-  done < <(who)
-  (( found )) || printf '%sNo interactive SSH sessions.%s\n\n' "$G" "$R"
 
-  # Everything Tailscale SSH has started, including non-terminal commands (scripts, agents)
-  printf '%sAll SSH processes%s  %s(user, pid, command)%s\n' "$B" "$R" "$D" "$R"
-  local ts
-  ts=$(pgrep -xo tailscaled)
-  if [[ -n $ts ]] && pgrep -P "$ts" >/dev/null; then
-    for child in $(pgrep -P "$ts"); do
-      pstree -a -u -p -l "$child" | cut -c1-150 | sed 's/^/  /'
-    done
-  else
-    printf '  %snone%s\n' "$G" "$R"
-  fi
-  echo
+def run(*cmd):
+    try:
+        return subprocess.run(cmd, capture_output=True, text=True, timeout=5).stdout
+    except (OSError, subprocess.TimeoutExpired):
+        return ""
 
-  printf '%sRecent SSH events%s  %s(last 24h)%s\n' "$B" "$R" "$D" "$R"
-  journalctl -u tailscaled --since '-24h' -o short --no-pager 2>/dev/null |
-    grep -E 'new SSH connection|access granted|denied|rejected|Session complete' | tail -8 | sed -E 's/ [^ ]+ tailscaled\[[0-9]+\]://' | cut -c1-150 | sed "s/^/  $D/;s/$/$R/"
-}
 
-trap 'tput cnorm; exit' INT TERM
-tput civis
-while true; do
-  out=$(render)
-  clear
-  printf '%s\n' "$out"
-  sleep 2
-done
+def peer_names():
+    """Tailscale IP -> machine name."""
+    try:
+        status = json.loads(run("tailscale", "status", "--json") or "{}")
+    except json.JSONDecodeError:
+        return {}
+    return {ip: p.get("HostName", "?") for p in (status.get("Peer") or {}).values() for ip in p.get("TailscaleIPs", [])}
+
+
+def processes():
+    """pid -> dict(ppid, user, tty, etimes, stat, args)."""
+    procs = {}
+    for line in run("ps", "-eo", "pid=,ppid=,user=,tty=,etimes=,stat=,args=").splitlines():
+        pid, ppid, user, tty, etimes, stat, args = (line.split(None, 6) + [""])[:7]
+        procs[int(pid)] = dict(ppid=int(ppid), user=user, tty=tty, etimes=int(etimes), stat=stat, args=args)
+    return procs
+
+
+def descendants(procs, root):
+    kids = {}
+    for pid, p in procs.items():
+        kids.setdefault(p["ppid"], []).append(pid)
+    out, stack = [], [root]
+    while stack:
+        pid = stack.pop()
+        out.append(pid)
+        stack.extend(sorted(kids.get(pid, []), reverse=True))
+    return out
+
+
+def ago(seconds):
+    seconds = int(seconds)
+    if seconds < 60:
+        return f"{seconds}s"
+    if seconds < 3600:
+        return f"{seconds // 60}m"
+    return f"{seconds // 3600}h{seconds % 3600 // 60:02d}m"
+
+
+def short(args, width=60):
+    args = re.sub(r"^\S*/", "", args)  # drop the binary's directory
+    return args if len(args) <= width else args[: width - 1] + "…"
+
+
+def tty_idle(tty):
+    try:
+        return time.time() - os.stat(f"/dev/{tty}").st_atime
+    except OSError:
+        return None
+
+
+def who_hosts():
+    """tty -> remote IP, from utmp."""
+    hosts = {}
+    for line in run("who").splitlines():
+        m = re.match(r"(\S+)\s+(\S+).*\(([\d.]+|[0-9a-f:]{4,})\)$", line)
+        if m:
+            hosts[m.group(2)] = m.group(3)
+    return hosts
+
+
+def activity(procs, pids, tty):
+    """What the session is doing: tmux panes, or the foreground command."""
+    lines = []
+    if any(procs[p]["args"].startswith("tmux") for p in pids):
+        fmt = "#{session_name}\t#{pane_current_command}"
+        panes = [l.split("\t") for l in run("tmux", "list-panes", "-a", "-F", fmt).splitlines() if "\t" in l]
+        for session, cmd in panes:
+            lines.append(f"tmux {session}  → {cmd}")
+    if not lines:
+        fg = [p for p in pids if "+" in procs[p]["stat"]] or pids
+        cmds = [procs[p]["args"] for p in fg if not procs[p]["args"].startswith(("login", "/usr/bin/login", "/usr/sbin/tailscaled", "-"))]
+        if cmds:
+            lines.append(short(cmds[-1]))
+    return lines
+
+
+def sessions(procs, names):
+    ts = [pid for pid, p in procs.items() if p["args"].startswith("/usr/sbin/tailscaled") and p["ppid"] == 1]
+    if not ts:
+        return []
+    hosts = who_hosts()
+    out = []
+    for root in sorted(pid for pid, p in procs.items() if p["ppid"] == ts[0]):
+        pids = descendants(procs, root)
+        users = [procs[p]["user"] for p in pids if procs[p]["user"] != "root"]
+        tty = next((procs[p]["tty"] for p in pids if procs[p]["tty"] != "?"), None)
+        ip = hosts.get(tty, "")
+        out.append(dict(
+            user=users[0] if users else "root",
+            peer=names.get(ip, ip or "—"),
+            tty=tty or "no tty",
+            age=procs[root]["etimes"],
+            idle=tty_idle(tty) if tty else None,
+            doing=activity(procs, pids, tty),
+        ))
+    return out
+
+
+EVENT_RE = re.compile(r"^(\S+ \S+ (\d\d:\d\d)):\d\d .*?ssh-session\((\S+)\): (.*)$")
+
+
+def events(names):
+    log = run("journalctl", "-u", "tailscaled", "--since", "-24h", "-o", "short", "--no-pager")
+    who, out = {}, []
+    for line in log.splitlines():
+        m = EVENT_RE.match(line)
+        if not m:
+            continue
+        _, hhmm, sess, msg = m.groups()
+        if c := re.search(r'new SSH connection from \S+ \(([^)]+)\) to ssh-user "([^"]+)"', msg):
+            ip, user = c.groups()
+            who[sess] = (user, names.get(ip, ip))
+            out.append((hhmm, *who[sess], f"{G}connected{R}"))
+        elif re.search(r"denied|rejected", msg, re.I):
+            out.append((hhmm, *who.get(sess, ("?", "?")), f"{RED}denied{R}"))
+        elif "Session complete" in msg:
+            out.append((hhmm, *who.get(sess, ("?", "?")), f"{D}ended{R}"))
+    return out[-EVENTS:][::-1]
+
+
+def render():
+    names = peer_names()
+    procs = processes()
+    lines = [f"{B}SSH{R}  {D}{time.strftime('%H:%M:%S')}{R}", ""]
+    active = sessions(procs, names)
+    for s in active:
+        idle = f"  idle {ago(s['idle'])}" if s["idle"] is not None else ""
+        lines.append(f"{G}●{R} {B}{C}{s['user']:<9}{R} {Y}{s['peer']:<8}{R} {s['tty']:<7}  {ago(s['age'])}{D}{idle}{R}")
+        lines += [f"    {D}{d}{R}" for d in s["doing"]]
+    if not active:
+        lines.append(f"{D}no active sessions{R}")
+    lines += ["", f"{B}Recent{R}"]
+    ev = events(names)
+    lines += [f"  {D}{t}{R}  {u:<9} {p:<8} {what}" for t, u, p, what in ev] or [f"  {D}none in the last 24h{R}"]
+    return "\n".join(lines)
+
+
+def main():
+    print("\033[?25l", end="")  # hide cursor
+    try:
+        while True:
+            frame = render()
+            print("\033[H\033[2J" + frame, flush=True)
+            time.sleep(REFRESH)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        print("\033[?25h", end="")
+
+
+if __name__ == "__main__":
+    main()
