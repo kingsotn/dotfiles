@@ -104,7 +104,7 @@ bindsym $mod+a focus parent
 bindsym $mod+1 exec --no-startup-id ~/.config/i3/hyper-app.sh 1 '^firefox$' firefox
 bindsym $mod+2 exec --no-startup-id ~/.config/i3/hyper-app.sh 2 '^cursor$' ~/Downloads/cursor-0.44.8x86_64.AppImage --no-sandbox
 bindsym $mod+3 exec --no-startup-id ~/.config/i3/hyper-app.sh 3 '^kitty$' kitty
-bindsym $mod+4 exec --no-startup-id ~/.config/i3/hyper-app.sh 4 '^ssh-watch$' kitty --class ssh-watch ~/.local/bin/ssh-watch
+bindsym $mod+4 exec --no-startup-id ~/.config/i3/monitor.sh
 bindsym $mod+5 workspace 5
 bindsym $mod+6 exec --no-startup-id ~/.config/i3/hyper-app.sh 6 '^slack$' slack
 bindsym $mod+7 exec --no-startup-id ~/.config/i3/hyper-app.sh 7 '^spotify$' spotify
@@ -248,8 +248,9 @@ assign [class="(?i)^firefox$"] number 1
 assign [class="(?i)^cursor$"] number 2
 assign [class="(?i)^kitty$"] number 3
 assign [class="(?i)^slack$"] number 6
-# Hyper+4: live SSH session monitor (~/.local/bin/ssh-watch)
+# Hyper+4: SSH monitor (~/.local/bin/ssh-watch) + btop side by side
 assign [class="^ssh-watch$"] number 4
+assign [class="^btop-watch$"] number 4
 # Spotify sets its class after mapping, so assign doesn't catch it
 for_window [class="(?i)^spotify$"] move to workspace number 7
 

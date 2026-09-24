@@ -122,6 +122,25 @@ def sessions(procs, names):
     return out
 
 
+def gpu(procs):
+    """One summary line plus who is using GPU memory (btop has no per-process GPU view)."""
+    q = run("nvidia-smi", "--query-gpu=name,utilization.gpu,memory.used,memory.total,temperature.gpu,power.draw",
+            "--format=csv,noheader,nounits").strip().splitlines()
+    if not q:
+        return []
+    name, util, used, total, temp, power = [x.strip() for x in q[0].split(",")]
+    name = name.replace("NVIDIA GeForce ", "")
+    lines = [f"{B}GPU{R}  {name}  {util}%  {float(used) / 1024:.1f}/{float(total) / 1024:.0f} GB  {temp}°C  {float(power):.0f} W"]
+    apps = run("nvidia-smi", "--query-compute-apps=pid,used_memory", "--format=csv,noheader,nounits")
+    for line in apps.strip().splitlines():
+        pid, mem = [x.strip() for x in line.split(",")]
+        p = procs.get(int(pid), {})
+        lines.append(f"  {p.get('user', '?'):<9} {float(mem) / 1024:5.1f} GB  {D}{short(p.get('args', '?'), 50)}{R}")
+    if len(lines) == 1:
+        lines.append(f"  {D}no GPU jobs{R}")
+    return lines
+
+
 EVENT_RE = re.compile(r"^(\S+) .*?ssh-session\((\S+)\): (.*)$")
 
 
@@ -156,6 +175,7 @@ def render():
         lines += [f"    {D}{d}{R}" for d in s["doing"]]
     if not active:
         lines.append(f"{D}no active sessions{R}")
+    lines += [""] + gpu(procs)
     lines += ["", f"{B}Recent{R}  {D}(7 days){R}"]
     ev = events(names)
     lines += [f"  {D}{t}{R}  {u:<9} {p:<8} {what}" for t, u, p, what in ev] or [f"  {D}none in the last 7 days{R}"]
