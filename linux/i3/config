@@ -248,10 +248,11 @@ assign [class="(?i)^firefox$"] number 1
 assign [class="(?i)^cursor$"] number 2
 assign [class="(?i)^kitty$"] number 3
 assign [class="(?i)^slack$"] number 6
-# Hyper+4: SSH monitor (~/.local/bin/ssh-watch) + nvidia-smi below it, btop on the right
+# Hyper+4: SSH monitor (~/.local/bin/ssh-watch) + nvidia-smi below it, btop on the right, rig status below btop
 assign [class="^ssh-watch$"] number 4
 assign [class="^btop-watch$"] number 4
 assign [class="^nvsmi-watch$"] number 4
+assign [class="^rig-status$"] number 4
 # Spotify sets its class after mapping, so assign doesn't catch it
 for_window [class="(?i)^spotify$"] move to workspace number 7
 
