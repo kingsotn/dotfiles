@@ -7,7 +7,6 @@
                         "description": "Spotify volume control with Alt + F10 (mute toggle), Alt + F11/F12 (volume adjust)",
                         "manipulators": [
                             {
-                                "type": "basic",
                                 "from": {
                                     "key_code": "f11",
                                     "modifiers": {
@@ -20,10 +19,10 @@
                                     {
                                         "shell_command": "osascript -e 'tell application \"Spotify\" to set sound volume to (sound volume - 5)'"
                                     }
-                                ]
+                                ],
+                                "type": "basic"
                             },
                             {
-                                "type": "basic",
                                 "from": {
                                     "key_code": "f10",
                                     "modifiers": {
@@ -36,10 +35,10 @@
                                     {
                                         "shell_command": "osascript -e 'tell application \"Spotify\"\n    if (sound volume > 0) then\n        set sound volume to 0\n    else\n        set sound volume to 50\n    end if\nend tell'"
                                     }
-                                ]
+                                ],
+                                "type": "basic"
                             },
                             {
-                                "type": "basic",
                                 "from": {
                                     "key_code": "f12",
                                     "modifiers": {
@@ -52,7 +51,8 @@
                                     {
                                         "shell_command": "osascript -e 'tell application \"Spotify\" to set sound volume to (sound volume + 5)'"
                                     }
-                                ]
+                                ],
+                                "type": "basic"
                             }
                         ]
                     },
@@ -81,11 +81,11 @@
                         ]
                     },
                     {
-                        "description": "open 6 slack",
+                        "description": "open 4 notes",
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "6",
+                                    "key_code": "4",
                                     "modifiers": {
                                         "mandatory": [
                                             "right_command",
@@ -97,7 +97,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "open -a 'Slack.app'"
+                                        "shell_command": "open -a 'notes.app'"
                                     }
                                 ],
                                 "type": "basic"
@@ -121,7 +121,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "open -a 'Brave Browser.app'"
+                                        "shell_command": "open -a 'Google Chrome.app'"
                                     }
                                 ],
                                 "type": "basic"
@@ -194,6 +194,54 @@
                                 "to": [
                                     {
                                         "shell_command": "open -a 'Spotify.app'"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "open 5 wechat",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "5",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "right_command",
+                                            "right_control",
+                                            "right_shift",
+                                            "right_option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "open -a 'WeChat.app'"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "open 6 slack",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "6",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "right_command",
+                                            "right_control",
+                                            "right_shift",
+                                            "right_option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "open -a 'Slack.app'"
                                     }
                                 ],
                                 "type": "basic"
@@ -410,6 +458,29 @@
                                 "to": [
                                     {
                                         "key_code": "c",
+                                        "modifiers": [
+                                            "left_control"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "o = ctrl-o",
+                                "from": {
+                                    "key_code": "o",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "right_command",
+                                            "right_control",
+                                            "right_shift",
+                                            "right_option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "o",
                                         "modifiers": [
                                             "left_control"
                                         ]
@@ -1044,7 +1115,10 @@
                         }
                     ]
                 }
-            ]
+            ],
+            "virtual_hid_keyboard": {
+                "keyboard_type_v2": "ansi"
+            }
         }
     ]
 }
